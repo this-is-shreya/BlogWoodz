@@ -1,0 +1,33 @@
+body { overflow-x: hidden;}
+.container{
+    margin-left: 25%;
+}
+.btn_links{
+    background: transparent;
+    border-color: transparent;
+    font-size: medium;
+}
+.blogbody{
+    margin-left: 18vw;width: 70%;
+    font-size: 18px;
+}
+button[name="blog_like"]{
+    margin-left: 20%;
+    background-color: white; border: 0;
+    font-size: large;
+}
+button{
+    background: transparent;
+    border: 0;
+}
+textarea{
+    resize: none;
+    width: 50%;
+    border: 0;
+}
+.comments_section{
+    margin-left: 20%;
+}
+.reply{
+    background-color: transparent;color: blue; border:0
+}

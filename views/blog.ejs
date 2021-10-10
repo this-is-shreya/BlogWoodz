@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogWoodz - Blog</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="../css/blog.css">
+<link rel="shortcut icon" href="../other/favicon.png" type="image/x-icon">  
+
+<link rel="stylesheet" href="../css/search.css">
+</head>
+<body>
+    <%- include("partials/navbar")%>
+    <div style="width: fit-content; font-family: serif;">
+
+    <input type="hidden" value="<%= email %>" name="email">
+    <input type="hidden" value="<%= user.username %>" id="hidden_user">
+     <h2 class="text-center" name="title"><%= blog.title %></h2><br>
+    <div class="container">
+    <div class="col col-md-1" >
+        <%if(dp == ""){%>
+            <img src="/other/blank.png"
+             id="dp_img"
+             style="height: 5rem;width:5rem;border-radius: 50%;margin-left: 40%;" >
+             
+             <%}else{%>
+               <img src="data:<%= writer[0].dp.contentType %>;base64,<%=dp %>" 
+               id="dp_img"
+                style="height: 5rem;width:5rem;border-radius: 50%;margin-left: 40%;" >
+               <%}%>
+
+         
+     
+    </div>
+    <div class="col col-md-3">
+        <h5 ><%= writer[0].name %></h5>
+        <h5 name="writer" class="text-muted"><a href="/profile/<%= writer[0].username %>">@<%=writer[0].username %></a></h5>
+        <small><%= blog.date %></small>
+        <%if(writer[0].username == user.username){%>
+            <a href="/edit-blog/<%= blog._id %>" class="btn btn-default">Edit</a>
+            <%}%>
+    </div>
+    <div class="col col-md-8" >
+        <%if (user!="nothing" && (user.bookmark).includes(blog._id)){%>
+            <button id="<%= blog._id %>" onclick="bookmark(this)" class="btn_links"><i class="fas fa-bookmark"></i></button>
+            <%}else{%>
+            <button id="<%= blog._id %>" onclick="bookmark(this)" class="btn_links"><i class="far fa-bookmark"></i></button>
+         
+             <%}%>
+       <br>
+       <% if (user!="nothing" && user.links.github){%>
+        <a class="btn_links" href ="<%= user.links.github %>"><i class="fab fa-github"></i></a>
+        <%} if(user!="nothing" && user.links.linkedin){%>
+        <a class="btn_links" href ="<%= user.links.linkedin %>"><i class="fab fa-linkedin-in"></i></a>
+        <%} if(user!="nothing" && user.links.instagram){%>
+        <a class="btn_links" href ="<%= user.links.instagram %>"><i class="fab fa-instagram"></i></a>
+        <%} if(user!="nothing" && user.links.pinterest){%>
+        <a class="btn_links" href ="<%= user.links.pinterest %>"><i class="fab fa-pinterest"></i></a>
+        <%}if(user!="nothing" && user.links.youtube){%>
+
+        <a class="btn_links" href ="<%= user.links.youtube %>"><i class="fab fa-youtube"></i></a>
+        <%}%>
+    </div>
+    
+    </div>
+    <hr>
+    <br><br>
+    <%if(blog.thumbnail != ""){%>
+    <div class="text-center">
+        <img src="<%= blog.thumbnail %>"
+         alt="" style="max-width:30vw;max-height:20vw;"><br><br>
+        
+    </div>
+    <%}%>
+    <div class="blogbody" >
+
+   
+    <%- blog.body %>
+    </div>
+    <br>
+    <%if (user!="nothing" && (user.liked_blogs).includes(blog._id) ){%>
+        <button id="<%= blog._id %>" class="active" name="blog_like" onclick="blog_likes(this)" >
+            <i class="fas fa-thumbs-up"></i>
+         </button>
+         <%} else{%>
+             <button id="<%= blog._id %>" name="blog_like" onclick="blog_likes(this)" >
+                <i class="far fa-thumbs-up"></i>
+             
+                 </button>
+         <%}%>
+         <label for="blog_like"><%= blog.blog_likes %></label>
+
+    <div class="comments_section" >
+        <br>
+        <%if (user!="nothing"){%>
+        <div class="row">
+            <div class="col col-md-1">
+                <%if(dp ==""){%>
+                    <img src="/other/blank.png"
+                     id="dp_img" style="height: 4vw;width:4vw;border-radius: 50%;">
+                     <%}else{%>
+                       <img src="data:<%= writer[0].dp.contentType %>;base64,<%=dp %>" id="dp_img"
+                       style="height: 4vw;width:4vw;border-radius: 50%;">
+                       <%}%>
+         
+                
+            </div>
+            <div class="col col-md-11">
+                <form onsubmit="return post_data(this)">
+                    <input type="hidden" name="id" value="<%= blog._id %>">
+                    <textarea   class="form-control" name="comment" style="width: 50%;" placeholder="Add a comment"></textarea><br>
+     <button class="btn btn-primary" type="submit">POST</button>
+     </form>
+            </div>
+        </div>
+        <%}%>
+       <br>
+       <h4>Comments <span class="badge"><%= blog.comment.length %></span></h4>
+       <% blog.comment = blog.comment.reverse() %>
+    <% let i=0 %>
+       <% blog.comment.forEach(comment=>{%>
+        <br>
+        <div class="row">
+            
+        
+       <div class="col col-md-1">
+        <%if(comment.image.contentType ==""){%>
+            <%comment.image.data = (comment.image.data).toString("base64")%>
+            <img src="/other/blank.png"
+             id="dp_img" style="height: 4vw;width:4vw;border-radius: 50%;">
+             <%}else{%>
+               <img src="data:<%= comment.image.contentType %>;base64,<%=(comment.image.data).toString('base64') %>" id="dp_img"
+               style="height: 4vw;width:4vw;border-radius: 50%;">
+               <%}%>
+       
+    </div>
+    <div class="col col-md-6">
+        <label >@<%= comment.username %></label><small><%= comment.date %></small>
+        <br>
+        <textarea id="<%= comment._id %>comment"  rows="2" cols="30" readonly ><%= comment.data %></textarea>
+    <br>
+        <% if (user!="nothing" && user.comments_made.includes(comment._id)){%>
+            <button  id="<%= comment._id %>edit" onclick="edit_comment(this)">
+                <i class="fas fa-edit"></i></button>
+            <button data-cmd="<%= blog._id %>" data-com="<%= comment._id %>" onclick="delete_com(this)">
+                <i class="fas fa-trash-alt"></i></button>
+            <button data-cmd="<%= blog._id %>" id="<%= comment._id %>send" style="display: none;" onclick="post_edit_comment(this)">
+                <i class="fas fa-paper-plane"></i></button>
+            <button id="<%= comment._id %>cancel" style="display:none;" onclick="cancel(this)">Cancel</button>
+            <%}%>
+    <% if (user!="nothing" && user.liked_comments.includes(comment._id)){%>
+        
+            
+     <button data-cmd="<%= blog._id %>" name="<%= comment._id %>" class="active"
+         onclick="comment_likes(this)" style="background-color: white;border: 0;">
+         <i class="fas fa-thumbs-up"></i>
+    </button>
+    <label for="<%= comment._id %>" ><%= comment.likes %></label>
+    <%} else{%>   
+        
+    
+        <button data-cmd="<%= blog._id %>" name="<%= comment._id %>" class=""
+            onclick="comment_likes(this)" style="background-color: white;border: 0;">
+            <i class="far fa-thumbs-up"></i>
+       </button>
+       <label for="<%= comment._id %>" ><%= comment.likes %></label>
+    <%}%>
+        <br>
+    
+    <br>
+    <button class="reply" id="<%= blog.comment[i]._id %>">Reply
+    <span class="badge"><%= (blog.comment[i].reply).length%></span></button><br>
+    <%if (user!="nothing"){%>
+    <div id="<%= blog.comment[i]._id %>d"  style="display: none;">
+        <form onsubmit="return post_reply(this)" >
+
+            <input type="hidden" name="cid" value="<%= blog.comment[i]._id %>">
+            <textarea name="reply" class="form-control" style="width: 50%;"
+            cols="10" rows="2" placeholder="Say something.."></textarea>
+            <button type="submit" class="btn btn-primary">POST</button>
+        </form>
+    <%}%>
+        
+        <%  (blog.comment[i].reply).forEach(reply=>{ %>
+            <br>
+            <div id="REPLIES">
+                <div class="col col-md-1">
+                    <%if(reply.image.contentType ==""){%>
+                        <img src="/other/blank.png"
+                         id="dp_img" style="height: 2vw;width:2vw;border-radius: 50%;">
+                         <%}else{%>
+                           <img src="data:<%= reply.image.contentType %>;base64,<%=reply.image.data %>" id="dp_img"
+                           style="height: 2vw;width:2vw;border-radius: 50%;">
+                           <%}%>
+                </div>
+                <div class="col col-md-11">
+                    <label>@<%= reply.username %></label><small><%= reply.date %></small>
+                    <br>
+                    <textarea id="<%= reply._id %>comment" readonly><%= reply.data %></textarea>
+                <br>
+           
+            <!-- comments_made -->
+            <% if (user!="nothing" && user.comments_made.includes(reply._id)){%>
+                <button  id="<%= reply._id %>edit" onclick="edit_comment(this)">
+                    <i class="fas fa-edit" ></i></button>
+                    <button id="<%=reply._id %>"data-com="<%= comment._id %>"
+                        data-cmd="<%= blog._id %>" onclick="delete_reply(this)">
+                        <i class="fas fa-trash-alt" ></i></button>
+                <button data-cmd="<%= blog._id %>" id="<%= reply._id %>send" style="display: none;"
+                    data-com="<%= comment._id%>" onclick="post_edit_reply(this)">
+                    <i class="fas fa-paper-plane" ></i></button>
+                <button id="<%= reply._id %>cancel" style="display:none;" onclick="cancel(this)">Cancel</button>
+
+            <%}%>
+            <%if(user!="nothing" && user.liked_comments.includes(reply._id)){%>
+                
+      
+                <button data-cmd="<%= blog._id %>" data-com = "<%= blog.comment[i]._id %>"
+             id="l" name="<%= reply._id %>" onclick="change_likes(this)"
+             style="background-color: white;border: 0;">
+             <i class="fas fa-thumbs-up" ></i>
+             </button>
+        <label for="<%= reply._id %>" id="l"><%= reply.likes %></label>
+        <br>
+        <%} else{%>
+            
+            
+            <button data-cmd="<%= blog._id %>" data-com = "<%= blog.comment[i]._id %>"
+                id="l" name="<%= reply._id %>" onclick="change_likes(this)"
+                style="background-color: white;border: 0;">
+                <i class="far fa-thumbs-up" ></i>
+                </button>
+           <label for="<%= reply._id %>" id="l"><%= reply.likes %></label>
+           <br>
+            <%}%>
+            </div>
+            </div>
+        <%  }) %>  
+              
+    </div>
+</div>
+</div>
+    <% i++ }) %>
+    
+
+      </div>
+      <br><br>
+      <%- include("partials/footer") %>
+    <%- blog.ads %>
+    <script src="../js/blog.js"></script>
+</body>
+</html>

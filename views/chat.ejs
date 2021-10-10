@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogWoodz - Chat</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="/css/search.css" type="text/css">
+    <link rel="stylesheet" href="/css/chat.css" type="text/css">
+    <link rel="shortcut icon" href="/other/favicon.png" type="image/x-icon">  
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <%- include("partials/navbar")%>
+    <div class="row">
+        <div class="col col-md-4" id="chat-contacts">
+            <input type="text" name="r" id="r" placeholder="Search by username"
+      onkeyup="search2()" >
+      <button onclick="create_new_chat2()" id="new-chat">New Chat</button>
+      <div id="receiver_search"></div>
+      <br>
+      <br>
+      <div id="users">
+      
+      </div>
+        </div>
+    <div class="send_div col col-md-8">
+        <div id="receiver-name" class="hidden">
+            <label for="receiver" style="font-size:18px;margin-left: 10px;">receiver</label>
+            <button class="delete" onclick="delete_chat2(this)"><i class="fas fa-trash-alt"></i></button>
+          </div>
+          <div id="chat" >
+            <div >Select a chat to start messaging!</div>
+          </div>
+          <br>
+          <div id="send-message" class="hidden">
+            <input type="text" name="input msg" placeholder="Type a message...">
+            <button class="send" onclick="on_post2(this)"  >
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+    </div>
+    </div>
+    <input type="hidden" name="sender" value="<%= username %>">
+
+<!-- <script src="https://cdn.socket.io/4.0.1/socket.io.js"></script>
+ -->
+ <script src="/js/socket.io/client-dist/socket.io.js"></script>
+
+<script src="/js/chat.js"></script>
+</body>
+</html>

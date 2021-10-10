@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogWoodz - Profile</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/drafts.css">
+<link rel="stylesheet" href="css/profile.css">
+<link rel="stylesheet" href="css/search.css">
+<link rel="shortcut icon" href="other/favicon.png" type="image/x-icon">  
+
+</head>
+<body>
+    <%- include("partials/navbar")%>
+    <input type="hidden" name="userid" value="<%=user._id%>">
+   <div class="container" >
+     <div class="col col-md-2 ">
+       <%if(dp ==""){%>
+       <img src="/other/blank.png"
+        id="dp_img">
+        <%}else{%>
+          <img src="data:<%= user.dp.contentType %>;base64,<%=dp %>" id="dp_img" >
+          <%}%>
+     </div>
+     <div class="col col-md-10 mx-auto">
+       <h2><%= user.name %></h2>
+       <h4 class="text-muted">@<%= user.username %></h4>
+
+       <% if (user!="nothing" && user.links.github){%>
+        <a class="links_btn" href ="<%= user.links.github %>"><i class="fab fa-github"></i></a>
+        <%} if(user!="nothing" && user.links.linkedin){%>
+        <a class="links_btn" href ="<%= user.links.linkedin %>"><i class="fab fa-linkedin-in"></i></a>
+        <%} if(user!="nothing" && user.links.instagram){%>
+        <a class="links_btn" href ="<%= user.links.instagram %>"><i class="fab fa-instagram"></i></a>
+        <%} if(user!="nothing" && user.links.pinterest){%>
+        <a class="links_btn" href ="<%= user.links.pinterest %>"><i class="fab fa-pinterest"></i></a>
+        <%}if(user!="nothing" && user.links.youtube){%>
+
+        <a class="links_btn" href ="<%= user.links.youtube %>"><i class="fab fa-youtube"></i></a>
+        <%}%>
+      <table class="table" style="width:fit-content;">
+        <tr>
+
+          <td><%= blog.length%></td>
+          <td><%= (user.followers).length%></td>
+          <td><%= (user.following).length%></td>
+        </tr>
+        <tr>
+          <th>Articles </th>
+          <th><button id="followers">Followers </button></th>
+          <th><button id="following">Following </button></th>
+        </tr>
+      </table>
+      <button class="btn btn-secondary" id="edit_btn">Edit Profile</button>
+      <% if (userprofile =="no"){%>
+        
+        <button class="btn btn-success" id="follow">Follow</button>
+      
+        <%}%>
+
+      <button class="btn btn-primary" id="bookmarks_btn"><i class="fa fa-bookmark" aria-hidden="true"></i> Bookmarks</button>
+        
+    </div>
+   </div>
+
+   <br>
+  <br>
+
+    <div id="editprofile">
+      <form id="form" method="POST" action="/add-profile-details" enctype="multipart/form-data">
+ 
+     <label >Name </label><input class="form-control input-sm" type="text" name="name" id="name" value="<%=user.name %>"><br>
+       <label >Profile picture </label><input type="file" class="form-control" id="dp" name="dp" >
+    <label >Add Links: </label>
+    <input class="form-control input-sm" type="text" name="github" id="Github" placeholder="Github" value="<%= user.links.github %>"><br>
+    <input class="form-control input-sm" type="text" name="linkedin" id="LinkedIn" placeholder="LinkedIn" value="<%= user.links.linkedin%>"><br>
+    <input class="form-control input-sm" type="text" name="instagram" id="Instagram" placeholder="Instagram" value="<%= user.links.instagram %>"><br>
+    <input class="form-control input-sm" type="text" name="pinterest" id="Pinterest" placeholder="Pinterest" value="<%= user.links.pinterest %>"><br>
+    <input class="form-control input-sm" type="text" name="youtube" id="Youtube" placeholder="Youtube" value="<%= user.links.youtube %>"><br>
+    <label >About Me</label><input class="form-control input-sm" type="text" name="about" id="About" value="<%= user.about %>"><br>
+    <label>Select your Blogging interests:</label><br>
+    <input type="checkbox" name="genre" class="c" value="personal"><label>Personal</label><br>
+    <input type="checkbox" name="genre" class="c" value="travel"><label>Travel</label><br>
+    <input type="checkbox" name="genre" class="c" value="food"><label>Food</label><br>
+    <input type="checkbox" name="genre" class="c" value="technical"><label>Technical</label><br>
+    <input type="checkbox" name="genre" class="c" value="programming"><label>Programming</label><br>
+    <input type="checkbox" name="genre" class="c" value="lifestyle"><label>Lifestyle</label><br>
+    <input type="checkbox" name="genre" class="c" value="entertainment"><label>Entertainment</label><br>
+    <input type="checkbox" name="genre" class="c" value="other"><label>Other</label><br>
+      
+   <br>
+<button class="btn btn-primary" type="submit" id="save">Save</button>
+<button class="btn btn-danger"  data-toggle="modal" data-target="#myModal">Delete Account</button>
+   </form>
+    
+</div>
+    <h4 class="text-center" id="quote"><i class="fa fa-quote-left" aria-hidden="true"></i>
+      <%= user.about %></h4>
+    <br>
+    <div class="followers_div">
+      <p class="lead">Followers</p>
+      <%followers.forEach(f=>{%>
+      <div class="f_div">
+        <%if (f.dp.contentType =="" || f.dp.data == undefined){%>
+          <img src="/other/blank.png"
+           id="f_dp">
+           <%}else{%>
+            
+            <%let imgg = f.dp.data.toString("base64") %>
+             <img src="data:<%= f.dp.contentType %>;base64,<%= imgg %>" id="f_dp"  >
+             <%}%>
+        
+          
+          <label style="padding: 10px;margin-left: 10px;"><a href="
+            /profile/<%= f.username %>"><%= f.username %></a></label>
+        </div>
+      <%})%>
+    </div>
+    <br>
+    <div class="following_div" style="display:none;">
+      <p class="lead">Following</p>
+      <%following.forEach(f=>{%>
+        <div class="f_div">
+          <%if (f.dp.contentType =="" || f.dp.data == undefined){%>
+            <img src="/other/blank.png"
+             id="f_dp">
+             <%}else{%>
+              <%let imgg = f.dp.data.toString("base64") %>
+               <img src="data:<%= f.dp.contentType %>;base64,<%= imgg %>" id="f_dp"  >
+               <%}%>
+        
+          
+          <label style="padding: 10px;margin-left: 10px;"><a href="
+            /profile/<%= f.username %>"><%= f.username %></a></label>
+        </div>
+      <%})%>
+    </div>
+    <br><br>
+    <a href="/create-blog" style="padding:5px;">+Write a New Blog</a>
+
+    <div id="bookmarks" style="display: none;">
+      <h3  style="text-align:left;margin-top:5%;padding: 5px;">
+        Your bookmarked blogs
+    </h3>
+    
+    <div class="row" >
+    <% all_blogs.forEach(blog=>{%>
+      <%if ((user.bookmark).includes(blog._id)){%>
+        <a href="blog/<%= blog.customid %>" class="stretched-link">
+
+      <div class="column">
+        <div class="card" style="color: black;" >
+          <%if (blog.thumbnail == ""){%>
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxIPDxUPDxAVFRUVFRUVFRUVFRUVFRUVFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDQ0OFQ0NFTcZFSU3KzcvLTE3KystLDQuLSs4NzIrKysrKystNjcrKysrOCsrKysrKzc3LSstKy0rKysrK//AABEIALUBFgMBIgACEQEDEQH/xAAaAAEBAQEBAQEAAAAAAAAAAAAAAQcDAgYF/8QAMxABAAECAwYCBwkBAAAAAAAAAAECEQMEcRIhMTI0cgWxExUiJUGhwTVCQ1FSU3OBshT/xAAXAQEBAQEAAAAAAAAAAAAAAAAAAQMC/8QAGxEBAAMBAQEBAAAAAAAAAAAAAAIDQREBURL/2gAMAwEAAhEDEQA/AMlFEVFAAAAVJABQQAEFQCwAgiooCKCAAgACKAgqAAAAAAAAoOgoioLYsAAAigIKAgoCSSqAgoIiKKIACCgJYAEFAQAAEBSwAAAAA6iqivMkqSD96rwOiPDZzm3VtxNO69OxaZiJi1r33/m+fh9viZLFq8FimMLE+7VaKJmZja4xHxfEYfBlV7773v13PznOKoNXAAAigIKgiCgIiiiWABBUARQECQEFAQJAAAQUBFAHZUVFEqVJBtmVn3dh7vw6PoxDL8lOkeTcMtNvDsO/7dHztDD8tyRpDOvXc8e1RWjgAEEUBJSygIAogoCJKgJBMBcEFQAAEABBQEAAAAAB2lYFQRJWUqBtuBTfw7DiP0YfymGH5efYjSG5YP2dR/HR9GG5bkjSGdetJ49qg0ZqAAACAKCKkghC2AQVAEUAl5VAAAQUBAAAAQUBAUHYVLICVcFslXAG4YMe7sPdf2KN39wwvL8lOkN3yvQYfZSwjLckaQzr1pY6kA0ZgCgqEgWJWEBAlAAsoIl1AQEAABBYAQAAABAALAAIoOwACVcFSvgDdMt0FHZSwjLclOkeTd8v0FHZSwjL8lOkMq9aWOgDVmqKkgqAAACSAAEoAigIAAgAigAigIAAllAQUBLCoDuWEuCvNXBUr4A3TA6CjspYPl+SnSPJvOB0FHZSwbL8kaR5M69aTdLKg0ZqIAsoAAACKgAllkBAAABAFBFEEFARQBBUkAFBJRUB3RUkFeK+EvTzXwnQG7YPQUdlLBsDkp0jybzhdBR2UsGwOSnSPJnXrSboIrRmBKAskIAogACAqAoAgKIAAABYAAABEFRQEUAQUB0AASVJgGjVeN1+p4xNrfGFMR329H/pm1EWiz6Ovxmn1LGRvG3/ANV9n4+it6Xb029z56zmMeddzl+uAg6cAAAICygAAiioAAAAAAAFwAAAAAAALiKACA6AIAIClgBAFEAAuAAABdAAAAEUAEBQABFAuCAXVFAuXRQLgAXAB7JAEAAWABEACQAEkACAAkQBbiAKIAsoACoAAAKAJIABCAKIAoAP/9k=" class="card-img-top" alt="">
+          <%}else{%>
+          <img src="<%= blog.thumbnail %>" alt="" class="card-img-top">
+          <%}%>
+            <%if ((blog.title).length > 50){%>
+            <h3><%= (blog.title).substring(0,50)+".." %></h3>
+              <%}else{%>
+            <h3><%= (blog.title) %></h3>
+                <%}%>
+          
+            <%if((blog.desc).length >100){%>
+           <p ><%= (blog.desc).substring(0,100)+".." %></p>
+          <%}else{%>
+           <p><%= (blog.desc)%></p>
+            <%}%>
+            <p><i class="fas fa-eye" ></i><%= blog.blog_views %><i class="fas fa-comment" style="margin-left: 10px;"></i><%= blog.comment.length%>
+              <i class="fas fa-thumbs-up" style="margin-left: 10px;"></i><%= blog.blog_likes %></p>
+
+        </div>
+      </div>
+    </a>
+
+      <%}%>
+      <%})%>
+      
+</div>
+
+<%if ((user.bookmark).length == 0){%>
+  <p>You have not bookmarked any blogs yet</p>
+  <%}%>
+    </div>
+   
+    <div class="row">
+      <%blog.forEach(blog=>{%>
+        <a href="blog/<%= blog.customid %>" class="stretched-link">
+      <div class="column">
+        <div class="card" style="color: black;" >
+          <%if (blog.thumbnail !=""){%>
+            <img src="<%= blog.thumbnail %>" class="card-img-top">
+            <%}else{%>
+            <img src="/other/Bloggily.png" class="card-img-top">
+            
+              <%}%>
+          
+            <%if ((blog.title).length > 50){%>
+            <h3><%= (blog.title).substring(0,50)+".." %></h3>
+              <%}else{%>
+            <h3><%= (blog.title) %></h3>
+                <%}%>
+          
+          
+            <%if((blog.desc).length >100){%>
+           <p ><%= (blog.desc).substring(0,100)+".." %></p>
+          <%}else{%>
+           <p><%= (blog.desc)%></p>
+            <%}%>
+            <p><i class="fas fa-eye" ></i><%= blog.blog_views %><i class="fas fa-comment" style="margin-left: 10px;"></i><%= blog.comment.length%>
+              <i class="fas fa-thumbs-up" style="margin-left: 10px;"></i><%= blog.blog_likes %></p>
+        </div>
+      </div>
+      </a>
+      <%})%>
+      </div>
+    
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Delete Account</h4>
+            </div>
+            <div class="modal-body">
+              <p>Do you wish to continue?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" id="deleteacc" data-dismiss="modal">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+     <script src="js/profile.js"></script>   
+</body>
+</html>

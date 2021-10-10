@@ -1,0 +1,55 @@
+select{
+    width: 40%;
+    height: fit-content;
+  }
+#dp_img{
+    
+    height: 150px;margin-top:2rem;border: 1px;border-radius: 5px;
+   
+}
+#bookmarks{
+    margin-left: 10px;
+}
+#editprofile{
+    width: 50%; padding: 10px;margin-left: 30px;display:none;
+}
+#quote{
+    width:60%;
+    margin: auto;
+     padding: 10px;
+}
+body { overflow-x: hidden;}
+.container{
+    margin-left: 23vw;
+
+}
+#editprofile{
+    margin-left: 23vw;
+
+}
+.links_btn{
+    font-size: 18px;
+    margin-left: 2px;
+    margin-right: 2px;;
+}
+.followers_div{
+    display:none;margin-left: 10em;
+}.following_div{
+    display:none;margin-left: 10em;
+}
+#f_dp{
+    height: 3vw; width: 3vw;border-radius: 50%;
+          border: 1px solid black;
+}
+#followers{
+    background-color: transparent;
+    border: transparent;
+}
+#following{
+    background-color: transparent;
+    border: transparent;
+}
+.f_div{
+    box-shadow: 1px grey;
+
+}

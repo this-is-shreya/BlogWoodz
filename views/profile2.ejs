@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogWoodz - Profile</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="../css/drafts.css">
+<link rel="stylesheet" href="../css/profile.css">
+<link rel="stylesheet" href="../css/search.css">
+<link rel="shortcut icon" href="../other/favicon.png" type="image/x-icon">  
+
+</head>
+<body>
+    <%- include("partials/navbar")%>
+    <input type="hidden" value="<%= userprofile._id%>" name="uid">
+    <div class="container" >
+      <div class="col col-md-2 ">
+        <%if(dp ==""){%>
+          <img src="/other/blank.png"
+           id="dp_img">
+           <%}else{%>
+             <img src="data:<%= userprofile.dp.contentType %>;base64,<%=dp %>" id="dp_img" >
+             <%}%>
+      </div>
+      <div class="col col-md-10 mx-auto">
+        <h2><%= userprofile.name %></h2>
+        <h4 class="text-muted">@<%= userprofile.username %></h4>
+ 
+        <% if (userprofile.links.github){%>
+         <a class="links_btn" href ="<%= userprofile.links.github %>"><i class="fab fa-github"></i></a>
+   
+         <%} if(userprofile.links.linkedin){%>
+         <a class="links_btn" href ="<%= userprofile.links.linkedin %>"><i class="fab fa-linkedin-in"></i></a>
+         <%} if(userprofile.links.instagram){%>
+         <a class="links_btn" href ="<%= userprofile.links.instagram %>"><i class="fab fa-instagram"></i></a>
+         <%} if(userprofile.links.pinterest){%>
+         <a class="links_btn" href ="<%= userprofile.links.pinterest %>"><i class="fab fa-pinterest"></i></a>
+         <%}if(userprofile.links.youtube){%>
+ 
+         <a class="links_btn" href ="<%= userprofile.links.youtube %>"><i class="fab fa-youtube"></i></a>
+         <%}%>
+       <table class="table" style="width:fit-content;">
+         <tr>
+ 
+           <td><%= blog.length%></td>
+           <td><%= (userprofile.followers).length%></td>
+           <td><%= (userprofile.following).length%></td>
+         </tr>
+         <tr>
+           <th>Articles </th>
+           <th>Followers </th>
+           <th>Following </th>
+         </tr>
+       </table>
+       <%if (username!="nothing" && me[0].following.includes(userprofile._id)){%>
+       <button class="btn btn-success" id="follow">Following</button>
+       <%}else{%>
+       <button class="btn btn-success" id="follow">Follow</button>
+        <%}%>
+    </div>
+</div>
+<br>
+<%if (userprofile.about != "" ){%>
+<h4 class="text-center" id="quote"><i class="fa fa-quote-left" aria-hidden="true"></i>
+    <%= userprofile.about %></h4>
+<%}%>
+  <br>
+  <div class="row">
+    <%blog.forEach(blog=>{%>
+    <div class="column">
+      <div class="card" >
+        <%if (blog.thumbnail !=""){%>
+          <img src="<%= blog.thumbnail %>" class="card-img-top">
+          <%}else{%>
+          <img src="../other/Bloggily.png" class="card-img-top">
+          
+            <%}%>
+        <a href="/blog/<%= blog.customid %>" class="stretched-link">
+          <%if ((blog.title).length > 50){%>
+          <h3><%= (blog.title).substring(0,50)+".." %></h3>
+            <%}else{%>
+          <h3><%= (blog.title) %></h3>
+              <%}%>
+        </a>
+        
+          <%if((blog.desc).length >100){%>
+         <p ><%= (blog.desc).substring(0,100)+".." %></p>
+        <%}else{%>
+         <p><%= (blog.desc)%></p>
+          <%}%>
+      </div>
+    </div>
+    <%})%>
+    </div>
+    <br>
+    <script src="../js/profile.js"></script>   
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="shortcut icon" href="other/favicon.png" type="image/x-icon">  
+    
+<title>BlogWoodz</title>
+    <style>
+  
+body{
+    background:linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1)) ;
+}
+    </style>
+</head>
+<body>
+    
+
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+      
+                  <div class="mb-md-5 mt-md-4 pb-5" id="login_div">
+      
+                    <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                    <p class="text-white-50 mb-5"></p>
+      
+                    <div class="form-outline form-white mb-4">
+                        <label class="form-label" for="typeEmailX">Email</label>
+                      <input type="email" id="typeEmailX" class="form-control form-control-lg" name="email" />
+        <p class="text-danger" id="email_login_p"></p>
+                      
+                    </div>
+      
+                    <div class="form-outline form-white mb-4">
+                      <label class="form-label" for="typePasswordX">Password</label>
+
+                      <input type="password" id="typePasswordX" class="form-control form-control-lg" name="password"/>
+        <p class="text-danger" id="password_login_p"></p>
+                    
+                    </div>
+      
+                    <p class="small mb-5 pb-lg-2"><button  id="forgotpassword"  class="btn btn-outline text-muted">Forgot password?</button></p>
+      
+                    <button class="btn btn-outline-light btn-lg px-5" id="login_btn" >Login</button>
+                    
+   
+                    
+      
+                    <p class="text-white-50 mb-5"></p>
+                  
+                    <p class="mb-0">Don't have an account?</p>
+                    <button class="btn btn-outline-light btn-lg px-5" id="signup_btn" >Register</button>
+
+                  </div>
+      <!-- signup -->
+      <div class="mb-md-5 mt-md-4 pb-5" id="signup_div">
+      
+        <h2 class="fw-bold mb-2 text-uppercase">SignUp</h2>
+        <p class="text-white-50 mb-5">Please enter your details</p>
+
+        <div class="form-outline form-white mb-4">
+          <label class="form-label" for="typeEmailX" >Email</label>
+
+          <input type="email" id="typeEmailX" class="form-control form-control-lg" name="email_signup" />
+        <p class="text-danger" id="email_p"></p>
+        </div>
+        <div class="form-outline form-white mb-4">
+            <label class="form-label" for="typeEmailX" >Username</label>
+
+            <input type="text" id="typeEmailX" class="form-control form-control-lg" name="username_signup" />
+        <p class="text-danger" id="username_p"></p>
+          
+          </div>
+        <div class="form-outline form-white mb-4">
+          <label class="form-label" for="typePasswordX" >Password</label>
+
+          <input type="password" id="typePasswordX" name="password_signup" class="form-control form-control-lg" />
+          <p class="text-danger" id="password_p"></p>
+        
+        </div>
+        <div class="form-outline form-white mb-4">
+            <label class="form-label" for="typePasswordX">Confirm Password</label>
+
+            <input type="password" id="typePasswordX" class="form-control form-control-lg" name="cp" />
+        <p class="text-danger" id="cp_p"></p>
+          
+          </div>
+
+        <button class="btn btn-outline-light btn-lg px-5" id="register">Register</button>
+        <p class="mb-0">Already have an account?</p>
+        <button class="btn btn-outline-light btn-lg px-5" id="login" >Login</button>
+
+
+      </div>
+      <div class="mb-md-5 mt-md-4 pb-5" id="forgot_div" >
+      
+        <h2 class="fw-bold mb-2 text-uppercase">Forgot Password</h2>
+        <p class="text-white-50 mb-5"></p>
+
+        <div class="form-outline form-white mb-4">
+            <label class="form-label" for="typeEmailX">Email</label>
+          <input type="email" id="email_forgot" class="form-control form-control-lg" name="email" />
+<p class="text-success" id="message_forgot"></p>
+          
+        </div>
+
+        <button class="btn btn-outline-light btn-lg px-5" id="forgot_btn" >Submit</button>
+      
+      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <script src="js/login.js">
+        
+      </script>
+   
+</body>
+</html>

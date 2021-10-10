@@ -1,0 +1,12 @@
+.search_results{
+    display: inline-block;      
+  background-color:white;
+  height:fit-content;
+  padding: 5px;;
+  width: 203px;
+  border: 1px black;
+  border-style: solid;
+  color:#000;
+  font-family:Arial;
+  font-size:14px;
+}

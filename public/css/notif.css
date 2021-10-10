@@ -1,0 +1,22 @@
+.card{
+    font-size: medium;
+    font-family: serif;
+    box-shadow: 1px 1px 2px grey;
+min-height: 3em;
+padding: 10px;
+
+}
+.card:hover{
+background-color: rgb(226, 226, 226);
+}
+#clear{
+    float: right;
+    background-color: white;
+    border: transparent;
+    color: rgb(41, 41, 139)
+}
+.lead{
+    padding: 10px;
+    font-family: serif;
+    font-size: 30px;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "shreyablog",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "node": "14.16.1"
+  },
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "custom-id": "^1.2.0",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "force-ssl-heroku": "^1.0.2",
+    "mongoose": "^5.12.13",
+    "nodemailer": "^6.6.3",
+    "nodemon": "^2.0.7",
+    "package": "^1.0.1",
+    "sanitize-html": "^2.5.1",
+    "socket.io": "^4.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "author": "shreya",
+  "license": "ISC"
+}

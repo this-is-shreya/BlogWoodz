@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogWoodz - Notification</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="/css/search.css" type="text/css">
+    <link rel="stylesheet" href="/css/notif.css" type="text/css">
+    <link rel="shortcut icon" href="/other/favicon.png" type="image/x-icon">  
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <%- include("partials/navbar")%>
+   
+    <label class="lead">Notifications</label>
+    <button id="clear">Clear All <i class="fas fa-trash-alt"></i></button><br>
+    <% if ((user.notif).length >0){%>
+        <%user.notif = user.notif.reverse()%>
+        <% user.notif.forEach(notif=>{%>
+            <%if (notif.type == "comment"){%>
+                <div class="card">
+                    @<%= notif.name %> commented on your blog '<%=notif.blog %>'
+                <br>
+                <small class="text-muted"><%= notif.date %></small></div>
+            <%}%>
+            <%if (notif.type == "follow"){%>
+                <div class="card">
+                    @<%= notif.name %> started following you
+                <br>
+                <small class="text-muted"><%= notif.date %></small></div>
+            <%}%>
+        <%})%>
+    <% }%>
+    
+    
+    <script src="/js/notif.js"></script>
+</body>
+</html>
